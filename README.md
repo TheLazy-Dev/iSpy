@@ -2,7 +2,7 @@
 
 ### Screenshots
 
- <img src="/ScreenShots/1.png" width=270 height=350 alt="splash screen">
+ <img src="/ScreenShots/1.png" width=400 height=350 alt="splash screen">
  <img src="/ScreenShots/5.png" width=270 height=350 alt="main screen">
  <img src="/ScreenShots/2.png" width=270 height=350 alt="attach letter dialog">
  <img src="/ScreenShots/4.png" width=270 height=350 alt="competitor screen">
