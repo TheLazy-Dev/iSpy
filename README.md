@@ -26,6 +26,7 @@
  ### To run the server
  ```
  $ cd backend
+ $ npm install
  $ node index.js
  ```
 
