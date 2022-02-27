@@ -1,3 +1,7 @@
+/// This is the landing page for the application.
+/// if the username is valid this page will be displayed.
+/// user can select from players online list and play against them.
+
 import 'dart:convert';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
@@ -7,8 +11,9 @@ import 'package:lottie/lottie.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 class LandingPage extends StatefulWidget {
-  LandingPage({this.username, Key? key}) : super(key: key);
+  LandingPage({this.username, this.id, Key? key}) : super(key: key);
   var username;
+  var id;
   @override
   _LandingPageState createState() => _LandingPageState();
 }
@@ -44,19 +49,23 @@ class _LandingPageState extends State<LandingPage> {
         ),
         body: ListView.builder(
             itemBuilder: (context, index) {
-              return Card(
-                child: ListTile(
-                  onTap: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => ChatScreen(
-                                myUserName: widget.username,
-                                particiapantUserName: jsonData[index]
-                                    ["username"],
-                              ))),
-                  title: Text(jsonData[index]["username"]),
-                ),
-              );
+              return jsonData[index]['id'] != widget.id
+                  ? Card(
+                      child: ListTile(
+                        onTap: () => Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => ChatScreen(
+                                      myUserName: widget.username,
+                                      particiapantUserName: jsonData[index]
+                                          ["username"],
+                                    ))),
+                        title:
+                            Text('Player Name: ${jsonData[index]["username"]}'),
+                        subtitle: Text('Room ID: ${jsonData[index]["id"]}'),
+                      ),
+                    )
+                  : Container();
             },
             itemCount: jsonData.length),
       );

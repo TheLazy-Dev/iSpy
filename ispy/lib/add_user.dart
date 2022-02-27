@@ -1,9 +1,18 @@
+/// user will be shown this page if the username is not found in memory
+/// that mostly happens when user has cleared the memory or freshly installs the app.
+///
+/// Socket init will be done along with username saving to memory
+///
+///
+
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ispy/home.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:socket_io_client/socket_io_client.dart';
-import 'package:web_socket_channel/io.dart';
+import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 class AddMe extends StatefulWidget {
   const AddMe({Key? key}) : super(key: key);
@@ -13,6 +22,7 @@ class AddMe extends StatefulWidget {
 }
 
 class _AddMeState extends State<AddMe> {
+  late IO.Socket socket;
   TextEditingController usernameController = TextEditingController(
     text: '',
   );
@@ -69,24 +79,39 @@ class _AddMeState extends State<AddMe> {
                   errorMessage = 'Username cannot contain spaces';
                 });
               } else {
-                Socket socket = io(
-                    'ws://localhost:3000',
-                    OptionBuilder()
-                        .setTransports(['websocket'])
-                        .disableAutoConnect()
-                        .setExtraHeaders({"username": usernameController.text})
-                        .build());
+                socket = IO.io("http://localhost:3000", <String, dynamic>{
+                  'transports': ['websocket'],
+                  'autoConnect': false,
+                });
+
                 socket.connect();
-                SharedPreferences prefs = await SharedPreferences.getInstance();
-                prefs.setString('username', usernameController.text);
-                String userName = usernameController.text;
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => LandingPage(
-                            username: userName,
-                          )),
-                );
+                socket.onConnect((data) {
+                  socket.emit(
+                      "message",
+                      json.encode({
+                        "event": "register",
+                        "username": usernameController.text
+                      }));
+                });
+                socket.on("loggedin", (data) async {
+                  print(data);
+                  if (mounted && socket.connected) {
+                    SharedPreferences prefs =
+                        await SharedPreferences.getInstance();
+                    prefs.setString('username', usernameController.text);
+                    String userName = usernameController.text;
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => LandingPage(
+                          username: userName,
+                          id: data,
+                        ),
+                      ),
+                    );
+                  }
+                  ;
+                });
               }
             },
           ),

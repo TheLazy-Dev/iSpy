@@ -87,7 +87,7 @@ server.listen(port, () =>
 );
 
 /*
- */
+ *
 
 /*
 
@@ -95,4 +95,9 @@ server.listen(port, () =>
 
 
 {"event":"getAll"}
+
+{"event:send_ispy","data":{"image":base64Image,"sender":"senderUUID","receiver":"receiverUUID","character":"iSpy with my little eye _$letter_"}}
+
+{"event":"response_ispy","data":{"image":base64Image,"sender":"senderUUID","receiver":"receiverUUID"}}
+
 */

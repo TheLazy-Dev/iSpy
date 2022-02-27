@@ -1,3 +1,12 @@
+///
+///This is the beginning of the assignment in terms of Screens.
+///Splash will find if the username is stored in the memory.
+///if the username is stored in the memory, it will go to the main list screen.
+///if the username is not stored in the memory, it will go to the username setup screen screen.
+///
+///once the username is found the socket will connect automatically.
+///
+
 import 'dart:convert';
 import 'dart:io';
 
@@ -22,6 +31,9 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     getUsername();
     return Scaffold(
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+      ),
       backgroundColor: Colors.white,
       body: SafeArea(
         child: Column(
@@ -70,6 +82,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 MaterialPageRoute(
                   builder: (context) => LandingPage(
                     username: username,
+                    id: data,
                   ),
                 ));
           }
