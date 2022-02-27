@@ -2,12 +2,6 @@
 
 ### Screenshots
 
- ![Splash Screen](/ScreenShots/1.png "Splash Screen")
- ![Main Screen](/ScreenShots/5.png "Main Screen")
- ![Attach letter dialog](/ScreenShots/2.png "Attach letter dialog")
- ![Competitor Screen](/ScreenShots/4.png "Competitor Screen")
- ![Competitor Screen 2](/ScreenShots/3.png "Competitor Screen 2")
-
  <img src="/ScreenShots/1.png" width=270 height=350 alt="splash screen">
  <img src="/ScreenShots/5.png" width=270 height=350 alt="main screen">
  <img src="/ScreenShots/2.png" width=270 height=350 alt="attach letter dialog">
